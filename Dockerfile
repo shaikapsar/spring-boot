@@ -1,11 +1,11 @@
 FROM ubuntu:16.04
 MAINTAINER Apsar Shaik
 
-RUN apt-get update && apt-get install -y --no-install-recommends \ 
+RUN apt-get update && apt-get install -y --no-install-recommends \
        software-properties-common && \
        add-apt-repository -y ppa:openjdk-r/ppa && \
        apt-get update && apt-get install -y \
-       openjdk-8-jdk 
+       openjdk-8-jdk
 
 RUN groupadd -r spring && useradd -r -g spring spring
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
@@ -18,4 +18,5 @@ RUN chown -R spring:spring $BASE_DIR
 USER spring
 WORKDIR $INSTALL_DIR
 RUN bash -c "touch spring-boot.jar"
+EXPOSE 8080
 ENTRYPOINT exec java -jar spring-boot.jar
